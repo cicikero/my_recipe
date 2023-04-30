@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Matrix Animation</title>
+	<style>
+		body {
+			background-color: black;
+			margin: 0;
+			padding: 0;
+			overflow: hidden;
+		}
+		canvas {
+			display: block;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+	<script>
+		// canvas要素を取得
+		var canvas = document.getElementById("canvas");
+
+		// canvasの大きさを設定
+		canvas.width = window.innerWidth;
+		canvas.height = window.innerHeight;
+
+		// canvasの描画コンテキストを取得
+		var ctx = canvas.getContext("2d");
+
+		// 文字列の配列
+		// var chars = [" "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," ","v","x","b","a","℃","㈱","十","□","◆","ゑ","オ","エ","ウ","イ","ア"," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," ",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".","・","・","・","・","・","+","+","*","."*".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".","0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+
+		let chars = [];
+
+		// 0-9を配列に追加
+		for (let i = 0x30; i <= 0x39; i++) {
+		  chars.push(String.fromCharCode(i));
+		}
+
+		// a-zを配列に追加
+		for (let i = 0x61; i <= 0x7A; i++) {
+		  chars.push(String.fromCharCode(i));
+		}
+
+		// A-Zを配列に追加
+		for (let i = 0x41; i <= 0x5A; i++) {
+		  chars.push(String.fromCharCode(i));
+		}
+
+		// !-.を配列に追加
+		for (let i = 0x21; i <= 0x2e; i++) {
+		  chars.push(String.fromCharCode(i));
+		}
+
+		// 文字列をランダムに選択
+		function randomChar() {
+			return chars[Math.floor(Math.random() * chars.length)];
+		}
+
+		// 文字列の長さ
+		var length = 100;
+
+		// 初期化
+		var matrix = [];
+		for (var i = 0; i < length; i++) {
+			matrix[i] = [];
+			for (var j = 0; j < window.innerHeight / 20; j++) {
+				matrix[i][j] = randomChar();
+			}
+		}
+
+		// 文字列を表示
+		function draw() {
+			ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+			ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+			ctx.fillStyle = "#0F0"; // 文字の色
+			ctx.font = "15px Courier"; // フォント
+			for (var i = 0; i < length; i++) {
+				var row = matrix[i];
+				for (var j = 0; j < row.length; j++) {
+					var char = row[j];
+					ctx.fillText(char, i * 20, j * 20);
+				}
+				matrix[i].unshift(randomChar());
+				matrix[i].pop();
+			}
+		}
+
+		// 一定間隔でアニメーションを表示
+		setInterval(draw, 100);
+	</script>
+</body>
+</html>
