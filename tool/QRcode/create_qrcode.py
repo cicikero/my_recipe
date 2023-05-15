@@ -1,3 +1,4 @@
+import sys
 import qrcode
 
 def generate_qr_code(data, file_name):
@@ -13,8 +14,7 @@ def generate_qr_code(data, file_name):
     img = qr.make_image(fill_color="black", back_color="white")
     img.save(file_name)
 
-# 使用例
-data = "https://www.yahoo.co.jp/"
-file_name = "qrcode.png"
+# コマンドライン引数からデータとファイル名を取得
+data = sys.argv[1]
+file_name = sys.argv[2]
 generate_qr_code(data, file_name)
-
